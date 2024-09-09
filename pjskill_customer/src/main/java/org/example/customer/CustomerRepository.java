@@ -113,12 +113,9 @@ public class CustomerRepository {
 //                    """);
 //
 //            int cho = scanner.nextInt();
-//            try (
-//                    Connection conn
+//            try ( Connection conn
 //                            = DriverManager.getConnection(
 //                            "jdbc:mysql://192.168.0.85:3306/SKLL_Library", "root", "1234")) {
-//
-//
 //                if (cho == 1) {
 //                    PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET c_name= ? where c_id = ?");
 //                }
@@ -129,7 +126,6 @@ public class CustomerRepository {
 //            PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET c_state = ? where c_id = ?");
 //        }
 //    } else if(cho ==4)
-//
 //    {
 //        PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET join_date = ? where c_id = ?");
 //    }
