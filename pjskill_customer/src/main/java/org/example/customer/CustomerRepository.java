@@ -1,9 +1,6 @@
 package org.example.customer;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,24 +44,19 @@ public class CustomerRepository {
         String c_phone = scanner.next();
         System.out.print("회원 대여상태를 입력하세요: ");
         String c_state = scanner.next();
-        System.out.print("회원 가입일을 입력하세요(yyyy-mm-dd): ");
-        LocalDate join_Date = LocalDate.parse(scanner.next());
-        System.out.print("회원 탈퇴일을 입력하세요(yyyy-mm-dd): ");
-        LocalDate withdraw_Date = LocalDate.parse(scanner.next());
 
         try {
             Connection conn
                     = DriverManager.getConnection(
                     "jdbc:mysql://192.168.0.85:3306/SKLL_Library", "root", "1234");
             PreparedStatement pstmt = conn.prepareStatement("""
-                    INSERT INTO Customer (c_name, c_phone, c_state, join_date, withdraw_date)
-                    VALUES (?, ?, ?, ?, ?)""");
+                    INSERT INTO Customer (c_name, c_phone, c_state,join_date)
+                    VALUES (?, ?, ?, ?)""");
 
             pstmt.setString(1, c_name);
             pstmt.setString(2, c_phone);
             pstmt.setString(3, c_state);
-            pstmt.setObject(4, join_Date);
-            pstmt.setObject(5, withdraw_Date);
+            pstmt.setObject(4, Date.valueOf(LocalDate.now()));
 
             pstmt.executeUpdate();
         } catch (Exception e) {
