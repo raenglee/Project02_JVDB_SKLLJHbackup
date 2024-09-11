@@ -15,9 +15,10 @@ public class Main {
                     무엇을 하시겠습니까?
                     1. 전체 회원 정보 확인
                     2. 회원 가입
-                    3. 회원 정보 수정            
-                    4. 회원 삭제
-                    5. 종료
+                    3. 회원 탈퇴
+                    4. 회원 정보 수정            
+                    5. 회원 정보 삭제
+                    6. 종료
                     """);
 
             int n = scanner.nextInt();
@@ -27,8 +28,10 @@ public class Main {
             } else if (n == 2) {
                 customerRepository.insert();
             } else if (n == 3) {
-                customerRepository.update();
+                customerRepository.update_withdraw();
             } else if (n == 4) {
+                customerRepository.update();
+            } else if (n == 5) {
                 customerRepository.delete();
             } else {
                 System.out.println("종료합니다.");

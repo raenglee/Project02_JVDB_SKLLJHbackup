@@ -59,83 +59,171 @@ public class CustomerRepository {
             pstmt.setObject(4, Date.valueOf(LocalDate.now()));
 
             pstmt.executeUpdate();
+
+            System.out.println("회원가입이 완료되었습니다.");
+            System.out.println();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void update() {
+    public void update_withdraw() {
         Scanner scanner = new Scanner(System.in);
-
-        System.out.print("수정할 회원 번호를 입력하세요: ");
-        String c_id = scanner.next();
-        System.out.print("수정할 회원 이름을 입력하세요: ");
-        String c_name = scanner.next();
-        System.out.print("수정할 회원 전화번호를 입력하세요: ");
-        String c_phone = scanner.next();
-        System.out.print("수정할 회원 대여상태를 입력하세요: ");
-        String c_state = scanner.next();
-        System.out.print("수정할 회원 가입일을 입력하세요(yyyy-mm-dd): ");
-        LocalDate join_Date = LocalDate.parse(scanner.next());
-        System.out.print("수정할 회원 탈퇴일을 입력하세요(yyyy-mm-dd): ");
-        LocalDate withdraw_Date = LocalDate.parse(scanner.next());
+        System.out.println("탈퇴한 회원의 번호를 입력 해주세요.");
+        int c_id = scanner.nextInt();
 
         try {
             Connection conn
                     = DriverManager.getConnection(
                     "jdbc:mysql://192.168.0.85:3306/SKLL_Library", "root", "1234");
-
-            PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET c_name= ?, c_phone = ?, c_state = ?, join_date = ?, withdraw_date = ? where c_id = ?");
-            pstmt.setString(1, c_name);
-            pstmt.setString(2, c_phone);
-            pstmt.setString(3, c_state);
-            pstmt.setObject(4, join_Date);
-            pstmt.setObject(5, withdraw_Date);
-            pstmt.setString(6, c_id);
-
+            PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET withdraw_date = ? where c_id = ?");
+            pstmt.setObject(1, Date.valueOf(LocalDate.now()));
+            pstmt.setInt(2, c_id);
             pstmt.executeUpdate();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-//            Scanner scanner = new Scanner(System.in);
-//        while (true) {
+//    public void update() {
+//        Scanner scanner = new Scanner(System.in);
 //
-//            System.out.println("""
-//                    어떤 정보를 수정하시겠습니까?
-//                    1. 회원 이름
-//                    2. 회원 휴대폰
-//                    3. 회원 대여 상태
-//                    4. 회원 가입일
-//                    5. 회원 탈퇴일
-//                    """);
+//        System.out.print("수정할 회원 번호를 입력하세요: ");
+//        String c_id = scanner.next();
+//        System.out.print("회원의 수정된 이름을 입력하세요: ");
+//        String c_name = scanner.next();
+//        System.out.print("회원의 수정된 전화번호를 입력하세요: ");
+//        String c_phone = scanner.next();
+//        System.out.print("회원의 수정된 대여상태를 입력하세요: ");
+//        String c_state = scanner.next();
+//        System.out.print("회원의 수정된 가입일을 입력하세요(yyyy-mm-dd): ");
+//        LocalDate join_Date = LocalDate.parse(scanner.next());
+//        System.out.print("회원의 수정된 탈퇴일을 입력하세요(yyyy-mm-dd): ");
+//        LocalDate withdraw_Date = LocalDate.parse(scanner.next());
 //
-//            int cho = scanner.nextInt();
-//            try {
-//                Connection conn
-//                        = DriverManager.getConnection(
-//                        "jdbc:mysql://192.168.0.85:3306/SKLL_Library", "root", "1234");
+//        try {
+//            Connection conn
+//                    = DriverManager.getConnection(
+//                    "jdbc:mysql://192.168.0.85:3306/SKLL_Library", "root", "1234");
 //
-//                if (cho == 1) {
-//                    PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET c_name= ? where c_id = ?");
-//                } else if (cho == 2) {
-//                    PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET c_phone = ? where c_id = ?");
-//                } else if (cho == 3) {
-//                    PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET c_state = ? where c_id = ?");
-//                } else if (cho == 4) {
-//                    PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET join_date = ? where c_id = ?");
-//                } else if (cho == 5) {
-//                    PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET withdraw_date = ? where c_id = ?");
-//                } else {
-//                    System.out.println("다시 선택하십시오.");
-//                }
-//                pstmt.executeUpdate();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+//            PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET c_name= ?, c_phone = ?, c_state = ?, join_date = ?, withdraw_date = ? where c_id = ?");
+//            pstmt.setString(1, c_name);
+//            pstmt.setString(2, c_phone);
+//            pstmt.setString(3, c_state);
+//            pstmt.setObject(4, join_Date);
+//            pstmt.setObject(5, withdraw_Date);
+//            pstmt.setString(6, c_id);
+//
+//            pstmt.executeUpdate();
+//        } catch (Exception e) {
+//            e.printStackTrace();
 //        }
 //    }
+
+
+    public void update() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("""
+                    어떤 정보를 수정하시겠습니까?
+                    1. 회원 이름
+                    2. 회원 휴대폰
+                    3. 회원 대여 상태
+                    4. 회원 가입일
+                    5. 회원 탈퇴일
+                    6. 종료
+                    """);
+
+            int cho = scanner.nextInt();
+
+            try {
+                Connection conn
+                        = DriverManager.getConnection(
+                        "jdbc:mysql://192.168.0.85:3306/SKLL_Library", "root", "1234");
+
+                if (cho == 1) {
+
+                    System.out.print("수정할 회원 번호를 입력하세요: ");
+                    String c_id = scanner.next();
+                    System.out.print("회원의 수정된 이름을 입력하세요: ");
+                    String c_name = scanner.next();
+
+                    PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET c_name= ? where c_id = ?");
+
+                    pstmt.setString(1, c_name);
+                    pstmt.setString(2, c_id);
+
+                    pstmt.executeUpdate();
+
+                } else if (cho == 2) {
+
+
+                    System.out.print("수정할 회원 번호를 입력하세요: ");
+                    String c_id = scanner.next();
+                    System.out.print("수정할 전화번호를 입력하세요: ");
+                    String c_phone = scanner.next();
+
+                    PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET c_phone = ? where c_id = ?");
+
+                    pstmt.setString(1, c_phone);
+                    pstmt.setString(2, c_id);
+
+                    pstmt.executeUpdate();
+
+                } else if (cho == 3) {
+
+                    System.out.print("수정할 회원 번호를 입력하세요: ");
+                    String c_id = scanner.next();
+                    System.out.print("변경할 대여 상태를 입력하세요.: ");
+                    String c_state = scanner.next();
+
+                    PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET c_state = ? where c_id = ?");
+
+                    pstmt.setString(1, c_state);
+                    pstmt.setString(2, c_id);
+
+                    pstmt.executeUpdate();
+
+                } else if (cho == 4) {
+
+                    System.out.print("수정할 회원 번호를 입력하세요: ");
+                    String c_id = scanner.next();
+                    System.out.print("가입일을 수정하세요(yyyy-mm-dd): ");
+                    String join_date = scanner.next();
+
+
+                    PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET join_date = ? where c_id = ?");
+                    pstmt.setString(1, join_date);
+                    pstmt.setString(2, c_id);
+
+                    pstmt.executeUpdate();
+
+                } else if (cho == 5) {
+
+
+                    System.out.print("수정할 회원 번호를 입력하세요: ");
+                    String c_id = scanner.next();
+                    System.out.print("탈퇴일을 수정하세요(yyyy-mm-dd): ");
+                    String withdraw_date = scanner.next();
+
+                    PreparedStatement pstmt = conn.prepareStatement("UPDATE Customer SET withdraw_date = ? where c_id = ?");
+
+                    pstmt.setString(1, withdraw_date);
+                    pstmt.setString(2, c_id);
+
+                    pstmt.executeUpdate();
+
+                } else {
+                    System.out.println("종료합니다.");
+                    break;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     public void delete() {
         Scanner scanner = new Scanner(System.in);
