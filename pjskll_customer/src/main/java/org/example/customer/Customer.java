@@ -14,19 +14,17 @@ public class Customer {
     private int c_id;
     private String c_name;
     private String c_phone;
-    private String c_state;
     private LocalDate join_date;
     private LocalDate withdraw_date;
 
     @Override
     public String toString() {
-        return "Customer{" +
-                "c_id=" + c_id +
-                ", c_name='" + c_name + '\'' +
-                ", c_phone='" + c_phone + '\'' +
-                ", c_state='" + c_state + '\'' +
-                ", join_date=" + join_date +
-                ", withdraw_date=" + withdraw_date +
+        return "회원{" +
+                "회원 번호: " + c_id +
+                ", 회원 이름: '" + c_name + '\'' +
+                ", 회원 휴대폰 번호: '" + c_phone + '\'' +
+                ", 가입일: " + join_date +
+                ", 탈퇴일: " + withdraw_date +
                 '}';
     }
 }
