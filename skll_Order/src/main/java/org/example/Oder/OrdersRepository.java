@@ -8,11 +8,6 @@ import java.util.Scanner;
 
 public class OrdersRepository {
 
-    private Connection conn;
-    public OrdersRepository() throws SQLException {
-        this.conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/SKLL_Library", "root", "1234");
-    }
-
     public void rental() throws SQLException {
         Scanner scanner = new Scanner(System.in);
 
@@ -26,6 +21,9 @@ public class OrdersRepository {
         ResultSet cidrs = null;
 
         try {
+            Connection conn
+                    = DriverManager.getConnection(
+                    "jdbc:mysql://192.168.0.85:3306/SKLL_Library", "root", "1234");
             PreparedStatement pstmt = conn.prepareStatement("SELECT b_id FROM Book WHERE b_name = ?");
             pstmt.setString(1, b_name);
             bidrs = pstmt.executeQuery();
@@ -41,7 +39,6 @@ public class OrdersRepository {
             pstmt.setString(1, c_name);
             cidrs = pstmt.executeQuery();
             cidrs.next();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -49,17 +46,26 @@ public class OrdersRepository {
         int c_id = cidrs.getInt("c_id");
 
         try {
+            Connection conn
+                    = DriverManager.getConnection(
+                    "jdbc:mysql://192.168.0.85:3306/SKLL_Library", "root", "1234");
             PreparedStatement pstmt = conn.prepareStatement("""
                     INSERT INTO Orders (start_date, c_id, e_id)
                                         VALUES (?, ?, ?)""");
 
-            pstmt.setString(1, Date.valueOf(LocalDate.now());
+            pstmt.setObject(1, Date.valueOf(LocalDate.now()));
             pstmt.setInt(2, c_id);
             pstmt.setInt(3, e_id);
 
             pstmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
+            Connection conn
+                    = DriverManager.getConnection(
+                    "jdbc:mysql://192.168.0.85:3306/SKLL_Library", "root", "1234");
             PreparedStatement pstmt = conn.prepareStatement("""
                     UPDATE entry SET state = '2' WHERE e_id = ?""");
             pstmt.setInt(1, e_id);
@@ -67,6 +73,7 @@ public class OrdersRepository {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }
+
+
